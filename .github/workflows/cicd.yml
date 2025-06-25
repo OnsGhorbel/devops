@@ -1,0 +1,38 @@
+name: devops 
+
+on: 
+  push:
+    branches:
+      - main 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: List Files
+        run: |
+          echo  "Listing files in the repository"
+
+      # - name: Run tests
+      #   run: |
+      #     pytest tests/
+          
+      # - name: Build Docker image
+      #   run: |
+      #     docker build -t myapp .
+
+      # - name: Push Docker image
+      #   run: |
+      #     docker tag myapp myrepo/myapp:latest
+      #     docker push myrepo/myapp:latest
