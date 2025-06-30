@@ -33,11 +33,21 @@ jobs:
         run: |
           pytest 
           
-      # - name: Build Docker image
-      #   run: |
-      #     docker build -t myapp .
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      # - name: Push Docker image
-      #   run: |
-      #     docker tag myapp myrepo/myapp:latest
-      #     docker push myrepo/myapp:latest
+      - name:  Docker Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}  
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          
+      - name: Build and push Docker image
+        run: |
+          echo "Building and pushing Docker image"
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/devops:${{ github.sha }} .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/devops:${{ github.sha }}
