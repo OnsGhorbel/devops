@@ -31,7 +31,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest FlaskWebProject1\tests
+          pytest 
           
       # - name: Build Docker image
       #   run: |
